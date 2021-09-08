@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Events;
+using Serilog.Sinks.MariaDB.Extensions;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -15,8 +15,8 @@ namespace WebAPI
         public static IConfiguration Configuration { get; } =
           new ConfigurationBuilder()
           .SetBasePath(Directory.GetCurrentDirectory())
-          .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", 
-              optional: false, 
+          .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json",
+              optional: false,
               reloadOnChange: true)
           .Build();
 
@@ -26,8 +26,10 @@ namespace WebAPI
 
             Log.Logger = new LoggerConfiguration()
             .ReadFrom.Configuration(Configuration, sectionName: "Serilog")
-            //.WriteTo.MariaDB(connectionString,
-            //    restrictedToMinimumLevel: LogEventLevel.Error)
+            .WriteTo.MariaDB(
+                connectionString,
+                restrictedToMinimumLevel: LogEventLevel.Error,
+                autoCreateTable:true)
             .Enrich.FromLogContext()
             .CreateLogger();
 

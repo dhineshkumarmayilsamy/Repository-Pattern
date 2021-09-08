@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Model.DomainModel;
 using Service.DI;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebAPI.Middleware;
@@ -46,7 +48,20 @@ namespace WebAPI
             // Db Context
             services.AddDbContext<AppDbContext>(options =>
             {
-                // TODO: Configure options.UseMySql() or options.UseSqlServer()
+               
+            });
+
+            // Db Context
+            int major = Convert.ToInt32(Configuration.GetSection("MySqlVersion")["Major"]);
+            int minor = Convert.ToInt32(Configuration.GetSection("MySqlVersion")["Minor"]);
+            int build = Convert.ToInt32(Configuration.GetSection("MySqlVersion")["Build"]);
+            Version v = new Version(major, minor, build);
+
+            var serverVersion = new MySqlServerVersion(v);
+            services.AddDbContext<AppDbContext>(options =>
+            {
+                // Configure options.UseMySql() or options.UseSqlServer()
+                options.UseMySql(Configuration.GetConnectionString("DbConnection"), serverVersion);
             });
 
             services.AddControllers();
