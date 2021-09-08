@@ -8,6 +8,7 @@ using Model.DomainModel;
 using Service.DI;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebAPI.Middleware;
 
 namespace WebAPI
 {
@@ -89,7 +90,7 @@ namespace WebAPI
             app.UseAuthorization();
 
             //Logger
-            //app.UseLoggerMiddleware();
+            app.UseLoggerMiddleware();
 
             // this will serve wwwroot/index.html when path is '/'
             app.UseDefaultFiles();
