@@ -6,7 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Model.DomainModel;
+using Service;
 using Service.DI;
+using Service.Interface;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -40,6 +42,9 @@ namespace WebAPI
             }));
 
             // Dependencies
+
+            services.AddScoped<IProductService,ProductService>();
+            services.AddScoped<IProductService, ProductService>();
 
 
             //Automapper

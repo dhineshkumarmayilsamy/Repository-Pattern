@@ -11,8 +11,11 @@ namespace Repository
         public UnitOfWork(AppDbContext context)
         {
             _context = context;
+            Product = new ProductRepository(_context);
 
         }
+
+        public IProductRepository Product { get; private set; }
 
         public int SaveChanges()
         {
