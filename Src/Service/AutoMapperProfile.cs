@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Model.DomainModel;
-using Model.Dto;
+using Model.Dtos;
 
 namespace Service
 {
@@ -9,6 +9,7 @@ namespace Service
         public AutoMapperProfile()
         {
             CreateMap<Product, ProductDto>();
+            CreateMap<ProductDto, Product>();
         }
     }
 }

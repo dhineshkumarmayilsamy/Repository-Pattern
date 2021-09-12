@@ -1,4 +1,4 @@
-﻿namespace Model.Dto
+﻿namespace Model.Dtos
 {
     public static class ResponseCode
     {

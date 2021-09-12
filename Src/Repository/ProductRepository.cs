@@ -1,5 +1,5 @@
 ﻿using Model.DomainModel;
-using Repository.Interface;
+using Repository.Interfaces;
 
 namespace Repository
 {

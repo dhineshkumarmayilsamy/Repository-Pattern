@@ -25,7 +25,7 @@ namespace WebAPI
             string connectionString = Configuration["ConnectionStrings:DbConnection"];
 
             Log.Logger = new LoggerConfiguration()
-            .ReadFrom.Configuration(Configuration, sectionName: "Serilog")
+            //.ReadFrom.Configuration(Configuration, sectionName: "Serilog")
             .WriteTo.MariaDB(
                 connectionString,
                 restrictedToMinimumLevel: LogEventLevel.Error,

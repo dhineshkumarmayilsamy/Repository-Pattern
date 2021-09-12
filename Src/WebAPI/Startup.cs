@@ -6,9 +6,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Model.DomainModel;
+using Repository;
+using Repository.Interfaces;
 using Service;
-using Service.DI;
-using Service.Interface;
+using Service.Extensions.DependencyInjection;
+using Service.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -43,18 +45,13 @@ namespace WebAPI
 
             // Dependencies
 
-            services.AddScoped<IProductService,ProductService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IProductService, ProductService>();
 
 
             //Automapper
             services.AddAutoMapper();
 
-            // Db Context
-            services.AddDbContext<AppDbContext>(options =>
-            {
-               
-            });
 
             // Db Context
             int major = Convert.ToInt32(Configuration.GetSection("MySqlVersion")["Major"]);
@@ -65,7 +62,6 @@ namespace WebAPI
             var serverVersion = new MySqlServerVersion(v);
             services.AddDbContext<AppDbContext>(options =>
             {
-                // Configure options.UseMySql() or options.UseSqlServer()
                 options.UseMySql(Configuration.GetConnectionString("DbConnection"), serverVersion);
             });
 

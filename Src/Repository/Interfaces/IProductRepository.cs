@@ -1,6 +1,6 @@
 ﻿using Model.DomainModel;
 
-namespace Repository.Interface
+namespace Repository.Interfaces
 {
     public interface IProductRepository : IRepository<Product>
     {

@@ -1,4 +1,4 @@
-﻿namespace Model.Struct
+﻿namespace Model.Structs
 {
     public struct SampleStruct
     {

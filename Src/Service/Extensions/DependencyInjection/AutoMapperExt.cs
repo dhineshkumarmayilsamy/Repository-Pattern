@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-namespace Service.DI
+namespace Service.Extensions.DependencyInjection
 {
     public static class AutoMapperExt
     {

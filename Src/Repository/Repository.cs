@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Repository.Interface;
+using Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,6 +71,8 @@ namespace Repository
         public void RemoveById(int id)
         {
             TEntity entity = _dbSet.Find(id);
+            if (entity == null)
+                throw new RecordNotFoundException();
             _dbSet.Remove(entity);
         }
 
