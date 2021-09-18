@@ -3,7 +3,7 @@ using Repository.Interfaces;
 
 namespace Repository
 {
-    public class ProductRepository : Repository<Product>, IProductRepository
+    public class ProductRepository : BaseRepository<Product>, IProductRepository
     {
 
         public ProductRepository(AppDbContext context) : base(context)

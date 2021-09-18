@@ -3,6 +3,7 @@ using Model.DomainModel;
 using Model.Dtos;
 using Repository.Interfaces;
 using Service.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace Service
@@ -28,11 +29,29 @@ namespace Service
             return new();
         }
 
-        public void AddProduct(ProductDto productDto)
+        public ProductDto GetProductById(int productId)
         {
-            var product = _mapper.Map<Product>(productDto);
-            _unitOfWork.Product.Add(product);
-            _unitOfWork.SaveChanges();
+            var product = _unitOfWork.Product.Get(productId);
+            if (product != null)
+            {
+                return _mapper.Map<ProductDto>(product);
+            }
+            return null;
+        }
+
+        public bool AddProduct(ProductDto productDto)
+        {
+            if (productDto != null)
+            {
+                var product = _mapper.Map<Product>(productDto);
+                _unitOfWork.Product.Add(product);
+                _unitOfWork.SaveChanges();
+                return true;
+            }
+            else
+            {
+                throw new ArgumentNullException();
+            }
         }
 
         public void UpdateProduct(ProductDto productDto)

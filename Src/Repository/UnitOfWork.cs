@@ -2,6 +2,7 @@
 
 using Model.DomainModel;
 using Repository.Interfaces;
+using System.Threading.Tasks;
 
 namespace Repository
 {
@@ -20,6 +21,11 @@ namespace Repository
         public int SaveChanges()
         {
             return _context.SaveChanges();
+        }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await _context.SaveChangesAsync();
         }
 
         public void Dispose()

@@ -1,8 +1,11 @@
-﻿namespace Repository.Interfaces
+﻿using System.Threading.Tasks;
+
+namespace Repository.Interfaces
 {
     public interface IUnitOfWork
     {
         public IProductRepository Product { get; }
-        int SaveChanges();
+        public int SaveChanges();
+        public Task<int> SaveChangesAsync();
     }
 }

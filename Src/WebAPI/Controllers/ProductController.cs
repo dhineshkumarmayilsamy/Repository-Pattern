@@ -26,13 +26,52 @@ namespace WebAPI.Controllers
         {
             try
             {
-                var messages = _productService.GetAllProducts();
+                var products = _productService.GetAllProducts();
                 return Ok(new ResponseModel()
                 {
-                    Result = messages,
+                    Result = products,
                     Status = ResponseCode.Success
                 });
 
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    new ResponseModel()
+                    {
+                        Result = null,
+                        Status = ResponseCode.Error
+                    });
+            }
+        }
+
+        [HttpGet("[action]")]
+        [ProducesResponseType(typeof(ProductDto), 200)]
+        public IActionResult GetProductById(int productId)
+        {
+            try
+            {
+                var product = _productService.GetProductById(productId);
+
+                if (product != null)
+                {
+                    return Ok(new ResponseModel()
+                    {
+                        Result = product,
+                        Status = ResponseCode.Success
+                    });
+                }
+                else
+                {
+                    return NotFound(new ResponseModel()
+                    {
+                        Result = null,
+                        Status = ResponseCode.Failed,
+                        ErrorCode = "RecordNotFound",
+                        ErrorMessage = "RecordNotFound"
+                    });
+                }
             }
             catch (Exception ex)
             {

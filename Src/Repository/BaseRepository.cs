@@ -4,20 +4,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
         protected readonly DbContext _dbContext;
         protected readonly DbSet<TEntity> _dbSet;
 
-        public Repository(DbContext context)
+        public BaseRepository(DbContext context)
         {
             _dbContext = context;
             _dbSet = _dbContext.Set<TEntity>();
         }
 
+        #region Sync
         public TEntity Get(int id)
         {
             return _dbSet.Find(id);
@@ -90,5 +92,26 @@ namespace Repository
         {
             return _dbContext.Database.ExecuteSqlRaw(query);
         }
+        #endregion Sync
+
+
+        // Under Testing
+        #region Async
+        public async Task<TEntity> GetAsync(int id)
+        {
+            return await _dbSet.FindAsync(id);
+        }
+
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
+        {
+            return await _dbSet.ToListAsync();
+        }
+
+        public async Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await _dbSet.SingleOrDefaultAsync(predicate);
+        }
+
+        #endregion Async
     }
 }
