@@ -5,6 +5,7 @@
 * ORM - EFCore - Db First
 * Database - MySQL 
 * Logger - Serilog
+* Test - xunit, Moq & Fluent Assertions
 
 ### Command
 * MySQL - Scaffold
